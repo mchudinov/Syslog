@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Server;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -31,14 +32,16 @@ namespace SyslogGui
 
         static void StartSyslogServer()
         {
-            #region SimpleInjector
-            var container = new SimpleInjector.Container();
-            container.Register<IMessageParser, MessageParser>();
-            container.Register<IMessageStorage>(() => new MemoryStorage(10000));
-            container.Verify();
-            #endregion
+            //#region SimpleInjector
+            //var container = new SimpleInjector.Container();
+            //container.Register<IMessageParser, MessageParser>();
+            var mp = new MessageParser();
+            var ms = new MemoryStorage(10000);
+            //container.Register<IMessageStorage>(() => new MemoryStorage(10000));
+            //container.Verify();
+            //#endregion
             UDPListener listener = new UDPListener(8888);
-            listener.StartListener(container.GetInstance<IMessageStorage>(), container.GetInstance<IMessageParser>());
+            listener.StartListener(ms, mp);
         }
     }
 }
