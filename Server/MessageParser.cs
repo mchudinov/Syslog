@@ -76,7 +76,7 @@ namespace Server
                     retValue = retValue.Replace(words[1], "");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // ignored
             }

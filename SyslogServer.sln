@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyslogServer", "SyslogServer\SyslogServer.csproj", "{1854271D-27FC-44DA-92E0-7D57FC25C153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "SyslogServer.Tests\Tests.csproj", "{6E188196-FCC1-4721-9313-6E75D79FE913}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{6E188196-FCC1-4721-9313-6E75D79FE913}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui", "SyslogGui\Gui.csproj", "{745644EF-9010-432B-AEF3-1AB4C65958DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui", "Gui\Gui.csproj", "{745644EF-9010-432B-AEF3-1AB4C65958DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{C80B321B-87E0-46A4-9C98-F31D080011F1}"
 EndProject

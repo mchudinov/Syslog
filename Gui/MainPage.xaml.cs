@@ -1,20 +1,21 @@
-﻿using Server;
+﻿using System;
+using Server;
 using System.Collections.ObjectModel;
+using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace SyslogGui
+namespace Gui
 {
     public sealed partial class MainPage : Page
     {
         public bool AutoScroll { get; set; } = true;
-        ObservableCollection<string> dc;
-        ConsoleContent _consolecontent = new ConsoleContent();
+        ObservableCollection<string> dc = new ObservableCollection<string> { "sdfsdf", "123123" };
 
         public MainPage()
         {
             this.InitializeComponent();
-            dc = _consolecontent.ConsoleOutput;
+            //await ThreadPool.RunAsync(new WorkItemHandler((IAsyncAction) => StartSyslogServer()));
         }
 
         void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -40,7 +41,7 @@ namespace SyslogGui
             //container.Register<IMessageStorage>(() => new MemoryStorage(10000));
             //container.Verify();
             //#endregion
-            UDPListener listener = new UDPListener(8888);
+            UdpListener listener = new UdpListener(8888);
             listener.StartListener(ms, mp);
         }
     }

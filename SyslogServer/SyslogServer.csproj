@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatagramListener.cs" />
     <Compile Include="IMessageParser.cs" />
     <Compile Include="IMessageStorage.cs" />
     <Compile Include="LimitedQueue.cs" />

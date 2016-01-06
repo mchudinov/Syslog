@@ -33,8 +33,9 @@ namespace SyslogServer
                     storage.Add(parser.Parse(rawmessage, endPoint.Address));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                // ignored
             }
             finally
             {
