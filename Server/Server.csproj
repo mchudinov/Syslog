@@ -110,7 +110,7 @@
     <Compile Include="DatagramListener.cs" />
     <Compile Include="IMessageParser.cs" />
     <Compile Include="IMessageStorage.cs" />
-    <Compile Include="IUdpListener.cs" />
+    <Compile Include="ISyslogListener.cs" />
     <Compile Include="LimitedQueue.cs" />
     <Compile Include="MemoryStorage.cs" />
     <Compile Include="MessageParser.cs" />
@@ -120,7 +120,6 @@
     <Compile Include="Models\SyslogMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UdpListener.cs" />
     <EmbeddedResource Include="Properties\Server.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

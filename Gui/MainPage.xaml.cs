@@ -13,7 +13,7 @@ namespace Gui
         public MainPage()
         {
             this.InitializeComponent();
-            //await ThreadPool.RunAsync(new WorkItemHandler((IAsyncAction) => StartSyslogServer()));
+            StartSyslogServer();
         }
 
         void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -31,15 +31,9 @@ namespace Gui
 
         static void StartSyslogServer()
         {
-            //#region SimpleInjector
-            //var container = new SimpleInjector.Container();
-            //container.Register<IMessageParser, MessageParser>();
             var mp = new MessageParser();
             var ms = new MemoryStorage(10000);
-            //container.Register<IMessageStorage>(() => new MemoryStorage(10000));
-            //container.Verify();
-            //#endregion
-            UdpListener listener = new UdpListener(8888);
+            DatagramListener listener = new DatagramListener(8888);
             listener.StartListener(ms, mp);
         }
     }

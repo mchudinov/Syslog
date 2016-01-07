@@ -7,7 +7,7 @@ namespace SyslogServer
 {
     public class UDPListener
     {
-        private int _port;
+        private readonly int _port;
         private const int MaxMessageLength = 1000;     //in bytes
 
         public UDPListener(int port)

@@ -1,34 +1,37 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Networking;
 using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
+using Server;
 
-namespace SyslogServer
+namespace Server
 {
-    class DatagramListener
+    public class DatagramListener : ISyslogListener
     {
-        private async Task SendMessage(string message, int port)
+        public int MaxMessageLenghtInBytes { get; set; } = 1024;
+        private readonly int _port;
+
+        public DatagramListener(int port)
+        {
+            _port = port;
+        }
+
+        private async Task BindService()
         {
             var socket = new DatagramSocket();
-
-            socket.MessageReceived += SocketOnMessageReceived;
-
-            using (var stream = await socket.GetOutputStreamAsync(new HostName("255.255.255.255"), port.ToString()))
+            socket.MessageReceived += OnMessageReceived;
+            socket.Control.InboundBufferSizeInBytes = 2048;
+            try
             {
-                using (var writer = new DataWriter(stream))
-                {
-                    var data = Encoding.UTF8.GetBytes(message);
-
-                    writer.WriteBytes(data);
-                    writer.StoreAsync();
-                }
+                await socket.BindServiceNameAsync(_port.ToString());
+            }
+            catch (Exception)
+            {
+                //ignore
             }
         }
 
-        private async void SocketOnMessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
+        private async void OnMessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
         {
             var result = args.GetDataStream();
             var resultStream = result.AsStreamForRead(1024);
@@ -43,6 +46,11 @@ namespace SyslogServer
                 //    MessageBox.Show(text);
                 //});
             }
+        }
+
+        public async void StartListener(IMessageStorage storage, IMessageParser parser)
+        {
+            await BindService();
         }
     }
 }
