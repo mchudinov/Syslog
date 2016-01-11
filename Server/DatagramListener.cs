@@ -2,16 +2,20 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
-using Server;
+using Windows.UI.Xaml.Media;
+using Server.Models;
 
 namespace Server
 {
     public class DatagramListener : ISyslogListener
     {
-        public int MaxMessageLenghtInBytes { get; set; } = 1024;
-        private readonly int _port;
+        public uint MaxMessageLenghtInBytes { get; set; } = 1024;
+        private readonly uint _port;
+        private const uint Buffer = 2048;
+        private IMessageStorage _storage;
+        private IMessageParser _parser;
 
-        public DatagramListener(int port)
+        public DatagramListener(uint port)
         {
             _port = port;
         }
@@ -20,25 +24,28 @@ namespace Server
         {
             var socket = new DatagramSocket();
             socket.MessageReceived += OnMessageReceived;
-            socket.Control.InboundBufferSizeInBytes = 2048;
+            socket.Control.InboundBufferSizeInBytes = Buffer;
+
             try
             {
                 await socket.BindServiceNameAsync(_port.ToString());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //ignore
             }
         }
 
-        private async void OnMessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
+        private async void OnMessageReceived(DatagramSocket soket, DatagramSocketMessageReceivedEventArgs args)
         {
             var result = args.GetDataStream();
-            var resultStream = result.AsStreamForRead(1024);
+            var resultStream = result.AsStreamForRead((int)Buffer);
 
             using (var reader = new StreamReader(resultStream))
             {
                 var text = await reader.ReadToEndAsync();
+                SyslogMessage message = _parser.Parse(text, soket.Information.RemoteAddress);
+                _storage.Add(message);
                 //Deployment.Current.Dispatcher.BeginInvoke(() =>
                 //{
                 //    // Do what you need to with the resulting text
@@ -50,6 +57,8 @@ namespace Server
 
         public async void StartListener(IMessageStorage storage, IMessageParser parser)
         {
+            _storage = storage;
+            _parser = parser;
             await BindService();
         }
     }

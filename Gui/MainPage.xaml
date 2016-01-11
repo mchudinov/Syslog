@@ -18,7 +18,7 @@
         <Grid Grid.Row="1" Background="Black" BorderBrush="Gray" BorderThickness="1">
             <ScrollViewer Name="Scroller" Margin="5">
                 <StackPanel>
-                    <ItemsControl Name="ControlSyslog" ItemsSource="{x:Bind dc}" SizeChanged="ControlSyslog_SizeChanged">
+                    <ItemsControl Name="ControlSyslog" ItemsSource="{x:Bind _collectionView}" SizeChanged="ControlSyslog_SizeChanged">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding}" Foreground="LightGray" FontFamily="Consolas"/>

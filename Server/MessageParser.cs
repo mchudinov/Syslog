@@ -1,19 +1,32 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using Server.Models;
 
 namespace Server
 {
     public class MessageParser : IMessageParser
     {
-        public SyslogMessage Parse(string rawmessage, IPAddress address)
+        private SyslogMessage ParseInternal(string rawmessage)
         {
             var message = GetMessage(rawmessage);
             var severity = GetSeverity(rawmessage);
             var datetime = GetDateTime(rawmessage);
             var facility = GetFacility(rawmessage);
-            var sm = new SyslogMessage(message, severity, datetime, address?.ToString() ?? string.Empty, facility);
+            var sm = new SyslogMessage(message, severity, datetime, string.Empty, facility);
+            return sm;
+        }
+
+        public SyslogMessage Parse(string rawmessage, System.Net.IPAddress address)
+        {
+            var sm = ParseInternal(rawmessage);
+            sm.HostName = address?.ToString() ?? string.Empty;
+            return sm;
+        }
+
+        public SyslogMessage Parse(string rawmessage, Windows.Networking.HostName hostname)
+        {
+            var sm = ParseInternal(rawmessage);
+            sm.HostName = hostname?.ToString() ?? string.Empty;
             return sm;
         }
 

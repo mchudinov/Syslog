@@ -7,6 +7,6 @@
         /// <summary>
         /// Maximum size of the syslog message that can be received in bytes
         /// </summary>
-        int MaxMessageLenghtInBytes { get; set; }
+        uint MaxMessageLenghtInBytes { get; set; }
     }
 }

@@ -5,8 +5,8 @@ namespace Server.Models
 {
     public class SyslogMessage
     {
-        public static Facility DefaultFacility = Facility.UserLevelMessages;
-        public static Severity DefaultSeverity = Severity.Informational;
+        public const Facility DefaultFacility = Facility.UserLevelMessages;
+        public const Severity DefaultSeverity = Severity.Informational;
         private const string DefaultHostName = "localhost";
 
         public SyslogMessage(
@@ -37,7 +37,7 @@ namespace Server.Models
 
         public DateTimeOffset DateTimeOffset { get; }
 
-        public string HostName { get; }
+        public string HostName { get; set; }
 
         public string AppName { get; }
 

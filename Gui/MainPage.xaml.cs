@@ -2,26 +2,34 @@
 using Server;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using MyToolkit.Collections;
 
 namespace Gui
 {
     public sealed partial class MainPage : Page
     {
         public bool AutoScroll { get; set; } = true;
-        ObservableCollection<string> dc = new ObservableCollection<string> { "sdfsdf", "123123" };
+        private readonly ObservableCollection<string> _collection;
+        private readonly ObservableCollectionView<string> _collectionView;
+        private readonly IMessageParser _parser;
+        private readonly IMessageStorage _storage;
 
         public MainPage()
         {
+            _parser = new MessageParser();
+            _storage = new MemoryStorage(10000);
             this.InitializeComponent();
+            _collection = new ObservableCollection<string> { "sdfsdf", "123123" };
+            _collectionView = new ObservableCollectionView<string>(_collection);
             StartSyslogServer();
         }
 
-        void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-        
-        void ControlSyslog_SizeChanged(object sender, SizeChangedEventArgs e)
+
+        private void ControlSyslog_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (AutoScroll)
             {
@@ -29,12 +37,10 @@ namespace Gui
             }
         }
 
-        static void StartSyslogServer()
+        private void StartSyslogServer()
         {
-            var mp = new MessageParser();
-            var ms = new MemoryStorage(10000);
-            DatagramListener listener = new DatagramListener(8888);
-            listener.StartListener(ms, mp);
+            DatagramListener listener = new DatagramListener(514);
+            listener.StartListener(_storage, _parser);
         }
     }
 }
