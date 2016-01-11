@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Server.Models
 {
-    public class SyslogMessage
+    public class SyslogMessage : IMessage
     {
         public const Facility DefaultFacility = Facility.UserLevelMessages;
         public const Severity DefaultSeverity = Severity.Informational;
@@ -25,7 +26,7 @@ namespace Server.Models
             Severity = severity ?? DefaultSeverity;
             HostName = hostName;
             AppName = appName;
-            Message = message;
+            MessageText = message;
             ProcId = procId;
             MsgId = msgId;
             StructuredDataElements = structuredDataElements;
@@ -45,8 +46,13 @@ namespace Server.Models
 
         public string MsgId { get; }
 
-        public string Message { get; }
+        public string MessageText { get; }
 
         public IEnumerable<StructuredDataElement> StructuredDataElements { get; }
+
+        public override string ToString()
+        {
+            return MessageText;
+        }
     }
 }

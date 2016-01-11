@@ -1,26 +1,23 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Server.Models;
 
 namespace Server
 {
     public class MemoryStorage : IMessageStorage
     {
-        private readonly LimitedQueue<SyslogMessage> _queue;
+        public ObservableCollection<string> Messages { get; }
+
         public event EventHandler MessageAdded;
 
-        public MemoryStorage(int capacity)
+        public MemoryStorage()
         {
-            _queue = new LimitedQueue<SyslogMessage>(capacity);
+            Messages = new ObservableCollection<string>();
         }
 
-        public int Capacity {
-            get { return _queue.Limit; }
-            set { _queue.Limit = value; }
-        }
-
-        public void Add(SyslogMessage message)
+        public void Add(IMessage message)
         {
-            _queue.Enqueue(message);
+            Messages.Add(message.ToString());
             MessageAdded?.Invoke(this, EventArgs.Empty);
         }
     }

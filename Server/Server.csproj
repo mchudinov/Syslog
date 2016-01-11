@@ -111,11 +111,10 @@
     <Compile Include="IMessageParser.cs" />
     <Compile Include="IMessageStorage.cs" />
     <Compile Include="ISyslogListener.cs" />
-    <Compile Include="LimitedObservableQueue.cs" />
-    <Compile Include="LimitedQueue.cs" />
     <Compile Include="MemoryStorage.cs" />
     <Compile Include="MessageParser.cs" />
     <Compile Include="Models\Facility.cs" />
+    <Compile Include="Models\IMessage.cs" />
     <Compile Include="Models\Severity.cs" />
     <Compile Include="Models\StructuredDataElement.cs" />
     <Compile Include="Models\SyslogMessage.cs" />

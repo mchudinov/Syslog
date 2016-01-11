@@ -30,7 +30,7 @@ namespace Server
             {
                 await socket.BindServiceNameAsync(_port.ToString());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //ignore
             }

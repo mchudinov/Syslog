@@ -9,7 +9,6 @@ namespace Gui
     public sealed partial class MainPage : Page
     {
         public bool AutoScroll { get; set; } = true;
-        private readonly ObservableCollection<string> _collection;
         private readonly ObservableCollectionView<string> _collectionView;
         private readonly IMessageParser _parser;
         private readonly IMessageStorage _storage;
@@ -17,10 +16,9 @@ namespace Gui
         public MainPage()
         {
             _parser = new MessageParser();
-            _storage = new MemoryStorage(10000);
+            _storage = new MemoryStorage();
             this.InitializeComponent();
-            _collection = new ObservableCollection<string> { "sdfsdf", "123123" };
-            _collectionView = new ObservableCollectionView<string>(_collection);
+            _collectionView = new ObservableCollectionView<string>(_storage.Messages);
             StartSyslogServer();
         }
 
