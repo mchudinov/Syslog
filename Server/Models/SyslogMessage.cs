@@ -4,29 +4,27 @@ using System.Text;
 
 namespace Server.Models
 {
-    public class SyslogMessage : IMessage
+    public class SyslogMessage : MessageBase
     {
         public const Facility DefaultFacility = Facility.UserLevelMessages;
         public const Severity DefaultSeverity = Severity.Informational;
-        private const string DefaultHostName = "localhost";
 
         public SyslogMessage(
             string message,
-            Severity? severity = null,
             DateTimeOffset? dateTimeOffset = null,
-            string hostName = DefaultHostName,
+            Severity? severity = null,
+            string hostName = "",
             Facility? facility = null,
             string appName = "",
             string procId = "",
             string msgId = "",
             params StructuredDataElement[] structuredDataElements)
+            : base(message, dateTimeOffset)
         {
-            DateTimeOffset = dateTimeOffset ?? DateTimeOffset.Now;
             Facility = facility ?? DefaultFacility;
             Severity = severity ?? DefaultSeverity;
             HostName = hostName;
-            AppName = appName;
-            MessageText = message;
+            AppName = appName;            
             ProcId = procId;
             MsgId = msgId;
             StructuredDataElements = structuredDataElements;
@@ -36,8 +34,6 @@ namespace Server.Models
 
         public Severity Severity { get; }
 
-        public DateTimeOffset DateTimeOffset { get; }
-
         public string HostName { get; set; }
 
         public string AppName { get; }
@@ -45,14 +41,12 @@ namespace Server.Models
         public string ProcId { get; }
 
         public string MsgId { get; }
-
-        public string MessageText { get; }
-
+        
         public IEnumerable<StructuredDataElement> StructuredDataElements { get; }
 
         public override string ToString()
         {
-            return MessageText;
+            return string.Format("[{0}] [{1}] {2}", DateTimeOffset, Severity, MessageText); ;
         }
     }
 }
