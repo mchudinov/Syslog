@@ -10,7 +10,7 @@ namespace Server
         {
             var message = GetMessage(rawmessage);
             var severity = GetSeverity(rawmessage);
-            var datetime = GetDateTime(rawmessage);
+            var datetime = DateTime.Now;//GetDateTime(rawmessage);
             var facility = GetFacility(rawmessage);
             var sm = new SyslogMessage(message, datetime, severity, string.Empty, facility);
             return sm;

@@ -8,8 +8,6 @@ namespace Server
     {
         public ObservableCollection<string> Messages { get; }
 
-        public event EventHandler MessageAdded;
-
         public MemoryStorage()
         {
             Messages = new ObservableCollection<string>();
@@ -18,7 +16,6 @@ namespace Server
         public void Add(IMessage message)
         {
             Messages.Add(message.ToString());
-            MessageAdded?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Server.Models
 {
@@ -8,6 +7,7 @@ namespace Server.Models
     {
         public const Facility DefaultFacility = Facility.UserLevelMessages;
         public const Severity DefaultSeverity = Severity.Informational;
+        private const string DateTimeFormat = "s";
 
         public SyslogMessage(
             string message,
@@ -46,7 +46,7 @@ namespace Server.Models
 
         public override string ToString()
         {
-            return string.Format("[{0}] [{1}] {2}", DateTimeOffset, Severity, MessageText); ;
+            return string.Format("[{0}] [{1}] {2}", DateTimeOffset.ToString(DateTimeFormat), Severity, MessageText); ;
         }
     }
 }

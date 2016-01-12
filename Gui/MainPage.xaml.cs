@@ -28,10 +28,10 @@ namespace Gui
 
         private void ControlSyslog_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (AutoScroll)
-            {
-                Scroller.ChangeView(0.0f, double.MaxValue, 1.0f);
-            }
+            //if (AutoScroll)
+            //{
+            //    Scroller.ChangeView(0.0f, double.MaxValue, 1.0f);
+            //}
         }
 
         private void StartSyslogServer()

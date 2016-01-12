@@ -9,7 +9,5 @@ namespace Server
         void Add(IMessage message);
 
         ObservableCollection<string> Messages { get; }
-
-        event EventHandler MessageAdded;
     }
 }

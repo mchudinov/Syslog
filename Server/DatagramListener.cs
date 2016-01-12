@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
+using Windows.UI.Core;
 using Server.Models;
 
 namespace Server
@@ -10,7 +11,7 @@ namespace Server
     {
         public uint MaxMessageLenghtInBytes { get; set; } = 1024;
         private readonly uint _port;
-        private const uint Buffer = 2048;
+        private const uint Buffer = 100;
         private IMessageStorage _storage;
         private IMessageParser _parser;
 
@@ -44,13 +45,11 @@ namespace Server
             {
                 var text = await reader.ReadToEndAsync();
                 SyslogMessage message = _parser.Parse(text, soket.Information.RemoteAddress);
-                _storage.Add(message);
-                //Deployment.Current.Dispatcher.BeginInvoke(() =>
-                //{
-                //    // Do what you need to with the resulting text
-                //    // Doesn't have to be a messagebox
-                //    MessageBox.Show(text);
-                //});
+                
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    _storage.Add(message);
+                });
             }
         }
 
