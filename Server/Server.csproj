@@ -115,6 +115,7 @@
     <Compile Include="MessageParser.cs" />
     <Compile Include="Models\Facility.cs" />
     <Compile Include="Models\IMessage.cs" />
+    <Compile Include="Models\MessageBase.cs" />
     <Compile Include="Models\Severity.cs" />
     <Compile Include="Models\StructuredDataElement.cs" />
     <Compile Include="Models\SyslogMessage.cs" />

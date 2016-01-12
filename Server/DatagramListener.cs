@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
-using Windows.UI.Xaml.Media;
 using Server.Models;
 
 namespace Server
