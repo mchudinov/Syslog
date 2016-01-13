@@ -16,7 +16,7 @@ namespace Server
         private const uint Buffer = 2097152;    //20Mb 1048576//10Mb
         private IMessageStorage _storage;
         private IMessageParser _parser;
-        private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>(); 
+        public ConcurrentQueue<string> Storage { get; private set; } = new ConcurrentQueue<string>(); 
 
         public DatagramListener(uint port)
         {
@@ -47,7 +47,7 @@ namespace Server
             using (var reader = new StreamReader(resultStream))
             {
                 var text = await reader.ReadToEndAsync();
-                _queue.Enqueue(text);
+                Storage.Enqueue(text);
                 //SyslogMessage message = _parser.Parse(text, soket.Information.RemoteAddress);
 
                 //await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
