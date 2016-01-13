@@ -1,4 +1,5 @@
-﻿using Server;
+﻿using System.Collections.Generic;
+using Server;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyToolkit.Collections;
@@ -17,7 +18,8 @@ namespace Gui
             _parser = new MessageParser();
             _storage = new MemoryStorage();
             this.InitializeComponent();
-            _collectionView = new ObservableCollectionView<string>(_storage.Messages);
+            _collectionView = new ObservableCollectionView<string>(new List<string>{ "asdasdasd","sdfsdf","sfsdf","sfsdfsdf","fgfghfhfh","sdfsdfsdf", "asdasdasd", "sdfsdf", "sfsdf", "sfsdfsdf", "fgfghfhfh", "sdfsdfsdf", "asdasdasd", "sdfsdf", "sfsdf", "sfsdfsdf", "fgfghfhfh", "sdfsdfsdf" });
+            //new ObservableCollectionView<string>(_storage.Messages);
             StartSyslogServer();
         }
 

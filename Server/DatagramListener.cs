@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
@@ -11,9 +13,10 @@ namespace Server
     {
         public uint MaxMessageLenghtInBytes { get; set; } = 1024;
         private readonly uint _port;
-        private const uint Buffer = 100;
+        private const uint Buffer = 2097152;    //20Mb 1048576//10Mb
         private IMessageStorage _storage;
         private IMessageParser _parser;
+        private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>(); 
 
         public DatagramListener(uint port)
         {
@@ -39,17 +42,18 @@ namespace Server
         private async void OnMessageReceived(DatagramSocket soket, DatagramSocketMessageReceivedEventArgs args)
         {
             var result = args.GetDataStream();
-            var resultStream = result.AsStreamForRead((int)Buffer);
+            var resultStream = result.AsStreamForRead();
 
             using (var reader = new StreamReader(resultStream))
             {
                 var text = await reader.ReadToEndAsync();
-                SyslogMessage message = _parser.Parse(text, soket.Information.RemoteAddress);
-                
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    _storage.Add(message);
-                });
+                _queue.Enqueue(text);
+                //SyslogMessage message = _parser.Parse(text, soket.Information.RemoteAddress);
+
+                //await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                //{
+                //    _storage.Add(message);
+                //});
             }
         }
 
