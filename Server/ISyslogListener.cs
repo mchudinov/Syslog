@@ -2,11 +2,8 @@
 {
     public interface ISyslogListener
     {
-        void StartListener(IMessageStorage storage, IMessageParser parser);
+        void StartListener();
 
-        /// <summary>
-        /// Maximum size of the syslog message that can be received in bytes
-        /// </summary>
-        uint MaxMessageLenghtInBytes { get; set; }
+        System.Collections.Concurrent.ConcurrentQueue<string> MessagesQueue { get; }
     }
 }

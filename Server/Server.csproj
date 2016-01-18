@@ -109,16 +109,8 @@
   <ItemGroup>
     <Compile Include="DatagramListener.cs" />
     <Compile Include="IMessageParser.cs" />
-    <Compile Include="IMessageStorage.cs" />
     <Compile Include="ISyslogListener.cs" />
-    <Compile Include="MemoryStorage.cs" />
     <Compile Include="MessageParser.cs" />
-    <Compile Include="Models\Facility.cs" />
-    <Compile Include="Models\IMessage.cs" />
-    <Compile Include="Models\MessageBase.cs" />
-    <Compile Include="Models\Severity.cs" />
-    <Compile Include="Models\StructuredDataElement.cs" />
-    <Compile Include="Models\SyslogMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Server.rd.xml" />
   </ItemGroup>
