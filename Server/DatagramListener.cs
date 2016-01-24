@@ -6,10 +6,14 @@ using Windows.Networking.Sockets;
 
 namespace Server
 {
+    /// <summary>
+    /// UDP port listener
+    /// netstat -an | find "UDP" | more
+    /// </summary>
     public class DatagramListener : ISyslogListener
     {
         private readonly uint _port;
-        private const uint Buffer = 2097152;    //20Mb  1048576 //10Mb
+        private const uint Buffer = 1048576;    //4194304 40Mb 2097152 //20Mb  1048576 //10Mb
         public ConcurrentQueue<string> MessagesQueue { get; } = new ConcurrentQueue<string>();
 
         public DatagramListener(uint port)
