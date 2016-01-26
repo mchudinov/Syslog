@@ -28,5 +28,8 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
+
+        <TextBlock Grid.Row="2" Foreground="LightGray" FontFamily="Consolas" Margin="5"  Text="{x:Bind _collectionView.Count, Mode=OneWay}"/>
+
     </Grid>
 </Page>

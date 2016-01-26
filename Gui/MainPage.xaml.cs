@@ -29,19 +29,21 @@ namespace Gui
         
         private async void MyTimerElapsedHandler(ThreadPoolTimer timer)
         {
-            var list = new List<string>();
-            while (_listener.MessagesQueue.Count >0)
+            if (_listener.MessagesQueue.Count > 0)
             {
-                string temp;
-                _listener.MessagesQueue.TryDequeue(out temp);
-                if (!string.IsNullOrEmpty(temp))
-                    list.Add(_parser.Parse(temp));
+                var list = new List<string>();
+                while (_listener.MessagesQueue.Count > 0)
+                {
+                    string temp;
+                    _listener.MessagesQueue.TryDequeue(out temp);
+                    if (!string.IsNullOrEmpty(temp))
+                        list.Add(_parser.Parse(temp));
+                }
+
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                    _collection.AddRange(list);
+                });
             }
-
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                _collection.AddRange(list);    
-            });
-
             _listener.StartListener();
         }
 
