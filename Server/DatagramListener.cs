@@ -13,7 +13,7 @@ namespace Server
     public class DatagramListener : ISyslogListener
     {
         private readonly uint _port;
-        private const uint Buffer = 1048576;    //4194304 40Mb 2097152 //20Mb  1048576 //10Mb
+        private const uint Buffer = 52428800;    //5242880 50Mb 2097152 //20Mb  1048576 //10Mb
         public ConcurrentQueue<string> MessagesQueue { get; } = new ConcurrentQueue<string>();
 
         public DatagramListener(uint port)
@@ -40,7 +40,7 @@ namespace Server
         private async void OnMessageReceived(DatagramSocket soket, DatagramSocketMessageReceivedEventArgs args)
         {
             var result = args.GetDataStream();
-            var resultStream = result.AsStreamForRead();
+            var resultStream = result.AsStreamForRead(4096);
             using (var reader = new StreamReader(resultStream))
             {
                 var text = await reader.ReadToEndAsync();
