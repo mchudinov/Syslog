@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0" Name="FilterTextBox" FontFamily="Consolas" Width="400" HorizontalAlignment="Left" Height="17" Margin="10,0,0,0" TextChanged="FilterTextBox_TextChanged" />
-        <CheckBox Grid.Row="0" Name="CheckBoxAutoscroll" Content="Autoscroll" HorizontalAlignment="Right" Checked="CheckBoxAutoscroll_Checked" IsChecked="{x:Bind AutoScroll, Mode=TwoWay}" FontFamily="Consolas" Foreground="LightGray"/>
+        <CheckBox Grid.Row="0" Name="CheckBoxAutoscroll" Content="Autoscroll" HorizontalAlignment="Right" Checked="CheckBoxAutoscroll_Checked" IsChecked="{x:Bind Autoscroll, Mode=TwoWay}" FontFamily="Consolas" Foreground="LightGray"/>
 
         <Grid Grid.Row="1" Background="Black" BorderBrush="Gray" BorderThickness="1">
             <ScrollViewer Name="Scroller" Margin="5">
@@ -22,7 +22,7 @@
                     <ItemsControl Name="ControlSyslog" ItemsSource="{x:Bind _collectionView}" SizeChanged="ControlSyslog_SizeChanged">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" Foreground="LightGray" FontFamily="Consolas"/>
+                                <TextBlock Text="{Binding}" Foreground="LightGray" FontFamily="Consolas" IsTextSelectionEnabled="True" SelectionHighlightColor="Gray"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
