@@ -6,14 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="#FF322F2F">
+    <Grid Background="SlateGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0" Name="FilterTextBox" FontFamily="Consolas" Width="400" HorizontalAlignment="Left" Height="20" Margin="10,10,0,8" TextChanged="FilterTextBox_TextChanged" Background="Gray" />
+        <TextBox Grid.Row="0" Name="FilterTextBox" FontFamily="Consolas" Width="400" HorizontalAlignment="Left" Height="17" Margin="10,0,0,0" TextChanged="FilterTextBox_TextChanged" />
+        <CheckBox Grid.Row="0" Name="CheckBoxAutoscroll" Content="Autoscroll" HorizontalAlignment="Right" Checked="CheckBoxAutoscroll_Checked" IsChecked="{x:Bind AutoScroll, Mode=TwoWay}" FontFamily="Consolas" Foreground="LightGray"/>
 
         <Grid Grid.Row="1" Background="Black" BorderBrush="Gray" BorderThickness="1">
             <ScrollViewer Name="Scroller" Margin="5">
@@ -29,7 +30,15 @@
             </ScrollViewer>
         </Grid>
 
-        <TextBlock Grid.Row="2" Foreground="LightGray" FontFamily="Consolas" Margin="5"  Text="{x:Bind _collectionView.Count, Mode=OneWay}"/>
+        <TextBlock Grid.Row="2" FontFamily="Consolas" Margin="5">            
+            <Run Text="Total messages:" Foreground="LightGray"/>
+            <Run Text="{x:Bind _collection.Count, Mode=OneWay}" Foreground="White"/>
+        </TextBlock>
+
+        <TextBlock Grid.Row="2" FontFamily="Consolas" Margin="5 30 0 0">            
+            <Run Text="After filter:" Foreground="LightGray"/>
+            <Run Text="{x:Bind _collectionView.Count, Mode=OneWay}" Foreground="White" />
+        </TextBlock>
 
     </Grid>
 </Page>

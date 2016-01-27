@@ -11,7 +11,7 @@ namespace Gui
 {
     public sealed partial class MainPage : Page
     {
-        public bool AutoScroll { get; set; } = true;
+        public bool? AutoScroll { get; set; } = true;
         private readonly MtObservableCollection<string> _collection = new MtObservableCollection<string>();
         private readonly ObservableCollectionView<string> _collectionView;
         private static readonly IMessageParser _parser = new MessageParser();
@@ -54,7 +54,7 @@ namespace Gui
 
         private void ControlSyslog_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (AutoScroll)
+            if ((bool)AutoScroll)
             {
                 Scroller.ChangeView(0.0f, double.MaxValue, 1.0f);
             }
@@ -64,6 +64,11 @@ namespace Gui
         {
             _listener = new DatagramListener(Port);
             _listener.StartListener();
+        }
+
+        private void CheckBoxAutoscroll_Checked(object sender, RoutedEventArgs e)
+        {
+            AutoScroll = ((CheckBox)sender).IsChecked;
         }
     }
 }
