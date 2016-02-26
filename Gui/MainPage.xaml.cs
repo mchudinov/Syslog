@@ -14,6 +14,7 @@ using MyToolkit.Collections;
 
 namespace Gui
 {
+    //netsh http add urlacl url=http://+:8000/ServiceModelSamples/Service user=Everyone
     public sealed partial class MainPage : Page
     {
         public bool? Autoscroll { get; set; } = true;
