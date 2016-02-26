@@ -77,7 +77,7 @@ namespace Gui
         }
     }
 
-    public class TextBlockHighlightBehaviour : Behavior<TextBlock>
+    public class TextBlockHighlightBehaviour : DependencyObject, IBehavior
     {
         private EventHandler<EventArgs> targetUpdatedHandler;
         public List<Highlight> Highlights { get; set; }
@@ -87,22 +87,38 @@ namespace Gui
             this.Highlights = new List<Highlight>();
         }
 
-        #region Behaviour Overrides
+        #region IBehaivior
 
-        protected override void OnAttached()
+        public DependencyObject AssociatedObject { get; set; }
+
+        public void Attach(DependencyObject associatedObject)
         {
-            base.OnAttached();
-        //    targetUpdatedHandler = new EventHandler<EventArgs>(TextBlockBindingUpdated);
-        //    Binding.AddTargetUpdatedHandler(this.AssociatedObject, targetUpdatedHandler);
-
-        //    // Run the initial behaviour logic
-        //    HighlightTextBlock(this.AssociatedObject);
+            AssociatedObject = associatedObject;
+            var fe = AssociatedObject as FrameworkElement;
+            if (fe != null)
+            {
+                
+            }
         }
 
-        protected override void OnDetaching()
+        //protected override void OnAttached(DependencyObject associatedObject)
+        //{
+        //    base.OnAttached();
+        //    targetUpdatedHandler = new EventHandler<EventArgs>(TextBlockBindingUpdated);
+        ////    Binding .AddTargetUpdatedHandler(this.AssociatedObject, targetUpdatedHandler);
+
+        ////    // Run the initial behaviour logic
+        ////    HighlightTextBlock(this.AssociatedObject);
+        //}
+
+        public void Detach()
         {
-            base.OnDetaching();
-        //    Binding.RemoveTargetUpdatedHandler(this.AssociatedObject, targetUpdatedHandler);
+            var fe = AssociatedObject as FrameworkElement;
+            if (fe != null)
+            {
+                
+            }
+            AssociatedObject = null;
         }
 
         #endregion
